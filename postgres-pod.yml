@@ -1,37 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: postgres-deployment
+  name: postgres-pod
   labels:
+    name: postgres-pod
     app: demo-voting-app
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: demo-voting-app
-      tier: db
-  template:
-    metadata:
-      labels:
-        app: demo-voting-app
-        tier: db
-    spec:
-      containers:
-        - name: postgres
-          image: postgres:9.4
-          env:
-            - name: POSTGRES_USER
-              value: "postgres"
-            - name: POSTGRES_PASSWORD
-              value: "postgres"
-            - name: POSTGRES_DB
-              value: "exampledb"
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "256Mi"
-            limits:
-              cpu: "250m"
-              memory: "512Mi"
-          ports:
-            - containerPort: 5432
+  containers:
+  - name: postgres
+    image: postgres:9.4
+    env:
+    - name: POSTGRES_USER
+      value: "postgres"
+    - name:  POSTGRES_PASSWORD
+      value: "postgres"
+    - name: POSTGRES_HOST_AUTH_METHOD
+      value: trust
+    ports:
+     - containerPort: 5432
