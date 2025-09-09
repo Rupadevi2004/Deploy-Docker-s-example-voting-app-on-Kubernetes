@@ -10,6 +10,11 @@ spec:
   - name: redis
     image: redis:latest
     ports:
-     - containerPort: 6379
+    - containerPort: 6379
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        ephemeral-storage: "500Mi" 
 
-     
