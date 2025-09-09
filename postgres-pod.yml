@@ -3,27 +3,13 @@ kind: Pod
 metadata:
   name: postgres-pod
   labels:
-    app: postgres
+    name: postgres-pod
+    app: demo-voting-app
+    
 spec:
   containers:
-    - name: postgres
-      image: postgres:latest # Or a specific version like postgres:16
-      env:
-        - name: POSTGRES_DB
-          value: mydatabase
-        - name: POSTGRES_USER
-          value: myuser
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secrets # Name of the Kubernetes Secret
-              key: POSTGRES_PASSWORD
-      ports:
-        - containerPort: 5432
-      volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
-  volumes:
-    - name: postgres-storage
-      persistentVolumeClaim:
-        claimName: postgres-pvc # Name of the PersistentVolumeClaim
+  - name: postgres
+    image: postgres:9.4
+    ports:
+     - containerPort: 5432
+    
